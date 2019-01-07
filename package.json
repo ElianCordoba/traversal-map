@@ -5,7 +5,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "test-debug": "node --inspect-brk node_modules/.bin/jest --watch"
   },
   "repository": {
     "type": "git",
@@ -19,5 +22,11 @@
     "lodash.merge": "^4.6.0"
   },
   "author": "Elian Cordoba <eliancordoba98@gmail.com> (github.com/ElianCordoba)",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^23.3.12",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.2"
+  }
 }

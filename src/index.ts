@@ -28,7 +28,7 @@ function circularStats(value, ancestry) {
  * Loops recursively through an array or plain object with optional
  * consideration for circular references that is enabled by default.
  */
-function forEachSafe(collection, callbackFn, options) {
+function forEachSafe(collection, callbackFn, options?) {
   /*
    * Handle option processing so that it only needs to be done once before
    * passing it to the internal recursive loop.
