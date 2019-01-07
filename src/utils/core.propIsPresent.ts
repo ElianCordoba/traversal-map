@@ -1,6 +1,6 @@
-const isPlainObject = require('lodash.isplainobject')
-const IsCallable = require('es-abstract-is-callable')
-const HasProperty = require('es-abstract-has-property')
+import isPlainObject from 'lodash.isplainobject';
+import IsCallable from 'es-abstract-is-callable';
+import HasProperty from 'es-abstract-has-property';
 
 /**
  * A utility to mimic the default "foreach" method's means of determining
@@ -41,4 +41,4 @@ function isIndex(value, length) {
   return value >= 0 && value % 1 === 0 && value <= MAX
 }
 
-module.exports = isPropertyPresent
+export default isPropertyPresent;

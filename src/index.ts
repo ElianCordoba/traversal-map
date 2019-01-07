@@ -1,6 +1,6 @@
-const forEach = require('./utils/core.forEach')
-const isPlainObject = require('lodash.isplainobject')
-const merge = require('lodash.merge')
+import forEach from './utils/core.forEach';
+import isPlainObject from 'lodash.isplainobject';
+import merge from 'lodash.merge';
 
 const LOOP_CONTINUE = '0' // Alternate: `undefined`
 const LOOP_BREAK_CURRENT = '10' // Alternate: `false`
@@ -243,4 +243,4 @@ function forEachLoop(
   return loopReturnCode
 }
 
-module.exports = forEachSafe
+export default forEachSafe;

@@ -1,8 +1,8 @@
-const isPlainObject = require('lodash.isplainobject')
-const baseKeys = require('./baseKeys')
-const HasProperty = require('es-abstract-has-property')
-const IsCallable = require('es-abstract-is-callable')
-const ToLength = require('es-abstract-to-length')
+import isPlainObject from 'lodash.isplainobject';
+import baseKeys from './baseKeys';
+import HasProperty from 'es-abstract-has-property';
+import IsCallable from 'es-abstract-is-callable';
+import ToLength from 'es-abstract-to-length';
 
 /*
  * COLLECTION
@@ -66,7 +66,7 @@ const ToLength = require('es-abstract-to-length')
  *
  * Iteration may be stopped early by having callbackFn return (boolean) false.
  */
-function forEach(collection, callbackFn, thisArg) {
+function forEach(collection, callbackFn, thisArg?) {
   var collectionIsArray
   var collectionIsArrayLikeObject
   var collectionIsPlainObject
@@ -157,4 +157,4 @@ function defaultIsObjectPropertyPresent(obj, P) {
   return obj.hasOwnProperty(P)
 }
 
-module.exports = forEach
+export default forEach;

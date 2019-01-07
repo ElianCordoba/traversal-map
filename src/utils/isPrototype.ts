@@ -14,4 +14,4 @@ function isPrototype(value) {
   return value === proto
 }
 
-module.exports = isPrototype
+export default isPrototype;

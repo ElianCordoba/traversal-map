@@ -1,4 +1,4 @@
-const isPrototype = require('./isPrototype')
+import isPrototype from './isPrototype';
 
 /**
  * Creates an array of the own enumerable property names of `object`.
@@ -19,7 +19,7 @@ function baseKeys(object) {
   if (!isPrototype(object)) {
     return Object.keys(Object(object))
   }
-  var result = []
+  var result = [] as any
   for (var key in Object(object)) {
     if (object.hasOwnProperty(key) && key !== 'constructor') {
       result.push(key)
@@ -28,4 +28,4 @@ function baseKeys(object) {
   return result
 }
 
-module.exports = baseKeys
+export default baseKeys;
