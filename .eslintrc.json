@@ -1,0 +1,11 @@
+/* ESLint's JSON files also allow JavaScript-style comments.
+ * <https://github.com/eslint/eslint/blob/master/docs/user-guide/configuring.md#configuration-file-formats>
+ */
+{
+  "extends": [
+    "prettier-standard"
+  ],
+  "env": {
+    "node": true
+  }
+}
