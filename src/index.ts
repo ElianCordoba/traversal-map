@@ -1,16 +1,7 @@
 import innerLooper from './utils/innerLooper';
 import { isValidObject } from './utils/typeCheckers';
+import { LOOP, DEFAULTS } from './constants';
 import { Options } from './interfaces';
-
-const DEFAULTS = {
-  enablePathArray: false,
-  useDotNotationOnKeys: true
-}
-
-const LOOP_CONTINUE = '0' // Alternate: `undefined`
-const LOOP_BREAK_CURRENT = '10' // Alternate: `false`
-const LOOP_BREAK_ALL = '11'
-const LOOP_SKIP_CHILDREN = '20'
 
 function traversalMap(collection, callbackFn, options?: Options) {
   if (options) {
@@ -89,15 +80,15 @@ function forEachLoop(
       if (Number.isFinite(fnReturnCode)) {
         fnReturnCode = fnReturnCode.toString()
       } else if (typeof fnReturnCode === 'undefined') {
-        fnReturnCode = LOOP_CONTINUE
+        fnReturnCode = LOOP.CONTINUE
       } else if (fnReturnCode === false) {
-        fnReturnCode = LOOP_BREAK_CURRENT
+        fnReturnCode = LOOP.BREAK_CURRENT
       }
 
       /*
        * Break out of the current loop if the fn return code says so.
        */
-      if (fnReturnCode === LOOP_BREAK_CURRENT) {
+      if (fnReturnCode === LOOP.BREAK_CURRENT) {
         return false
       }
 
@@ -105,7 +96,7 @@ function forEachLoop(
        * Break out of the current loop if the fn return code says so AND
        * tell all ancestor loops that they should break.
        */
-      if (fnReturnCode === LOOP_BREAK_ALL) {
+      if (fnReturnCode === LOOP.BREAK_ALL) {
         loopReturnCode = fnReturnCode
         return false
       }
@@ -123,7 +114,7 @@ function forEachLoop(
        * iteration with a circular reference is NOT optional.
        */
       if (childValuePostFnIsArray || childValuePostFnIsObject) {
-        if (fnReturnCode !== LOOP_SKIP_CHILDREN) {
+        if (fnReturnCode !== LOOP.SKIP_CHILDREN) {
           childLoopReturnCode = forEachLoop(
             childValuePostFn,
             fn,
@@ -137,7 +128,7 @@ function forEachLoop(
           /*
            * Break out of the current loop if the loop return code says so.
            */
-          if (childLoopReturnCode === LOOP_BREAK_ALL) {
+          if (childLoopReturnCode === LOOP.BREAK_ALL) {
             loopReturnCode = childLoopReturnCode
             return false
           }
