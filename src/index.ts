@@ -40,21 +40,15 @@ function forEachLoop(
   valueIsArray,
   valueIsPlainObject
 ) {
-  var pathArrayIsEnabled = settings.enablePathArray
-  var useDotNotationOnKeys = settings.useDotNotationOnKeys
   var loopReturnCode
 
   if (valueIsArray || valueIsPlainObject) {
-    /*
-     * Loop through each member of the collection.
-     */
     innerLooper(value, function forEachCollectionIteratee(
       childValue,
       keyOrIndex,
       parentCollection
     ) {
       var childLoopReturnCode
-      var childValueIsCircular
       var childValuePostFn
       var childValuePostFnIsArray
       var childValuePostFnIsObject
@@ -65,14 +59,14 @@ function forEachLoop(
       if (valueIsArray) {
         deepPath = path + '[' + keyOrIndex + ']'
       } else if (valueIsPlainObject) {
-        if (useDotNotationOnKeys) {
+        if (settings.useDotNotationOnKeys) {
           deepPath = path ? path + '.' + keyOrIndex : keyOrIndex
         } else {
           deepPath = path + '[' + keyOrIndex + ']'
         }
       }
-      
-      if (pathArrayIsEnabled) {
+
+      if (settings.enablePathArray) {
         deepPathArray = pathArray.concat()
         deepPathArray.push(keyOrIndex)
       } else {
@@ -83,10 +77,8 @@ function forEachLoop(
         parentCollection,
         childValue,
         keyOrIndex,
-        parentCollection,
         deepPath,
         deepPathArray,
-        childValueIsCircular
       )
 
       /*
