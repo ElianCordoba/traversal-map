@@ -17,15 +17,15 @@ import isPrototype from './isPrototype';
  */
 function baseKeys(object) {
   if (!isPrototype(object)) {
-    return Object.keys(Object(object))
+    return Object.keys(Object(object));
   }
-  var result = [] as any
+  var result = [] as any;
   for (var key in Object(object)) {
     if (object.hasOwnProperty(key) && key !== 'constructor') {
-      result.push(key)
+      result.push(key);
     }
   }
-  return result
+  return result;
 }
 
 export default baseKeys;

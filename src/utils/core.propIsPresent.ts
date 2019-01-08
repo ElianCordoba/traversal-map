@@ -12,33 +12,33 @@ import HasProperty from 'es-abstract-has-property';
  * @return {Boolean}     - A boolean indicating the result of the check
  */
 function isPropertyPresent(obj, P) {
-  var isPropPresent
-  var objIsArray
-  var objIsArrayLikeObject
-  var objIsPlainObject
+  var isPropPresent;
+  var objIsArray;
+  var objIsArrayLikeObject;
+  var objIsPlainObject;
 
-  objIsArray = Array.isArray(obj)
+  objIsArray = Array.isArray(obj);
   objIsArrayLikeObject =
-    obj != null && !IsCallable(obj) && typeof obj.length === 'number'
-  objIsPlainObject = isValidObject(obj)
+    obj != null && !IsCallable(obj) && typeof obj.length === 'number';
+  objIsPlainObject = isValidObject(obj);
 
   if ((objIsArray || objIsArrayLikeObject) && isIndex(P, obj.length)) {
-    isPropPresent = HasProperty
+    isPropPresent = HasProperty;
   } else if (objIsPlainObject) {
     isPropPresent = function hasOwnProp(obj, P) {
-      return obj.hasOwnProperty(P)
-    }
+      return obj.hasOwnProperty(P);
+    };
   }
-  return isPropPresent(obj, P)
+  return isPropPresent(obj, P);
 }
 
 function isIndex(value, length) {
-  var MAX
+  var MAX;
   if (!Number.isFinite(value)) {
-    return false
+    return false;
   }
-  MAX = Number.isFinite(length) ? length : Number.MAX_SAFE_INTEGER
-  return value >= 0 && value % 1 === 0 && value <= MAX
+  MAX = Number.isFinite(length) ? length : Number.MAX_SAFE_INTEGER;
+  return value >= 0 && value % 1 === 0 && value <= MAX;
 }
 
 export default isPropertyPresent;

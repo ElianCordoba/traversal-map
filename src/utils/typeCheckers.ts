@@ -1,5 +1,7 @@
 export function isValidObject(obj: any): obj is Object {
-  return isObject(obj) && !Array.isArray(obj) && !isInstanceOfForbbidenClass(obj);
+  return (
+    isObject(obj) && !Array.isArray(obj) && !isInstanceOfForbbidenClass(obj)
+  );
 }
 
 function isObject(obj: any): obj is Object {

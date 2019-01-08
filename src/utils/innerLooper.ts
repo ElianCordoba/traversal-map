@@ -67,33 +67,33 @@ import ToLength from 'es-abstract-to-length';
  * Iteration may be stopped early by having callbackFn return (boolean) false.
  */
 function innerLooper(collection, callbackFn, thisArg?) {
-  var collectionIsArray
-  var collectionIsArrayLikeObject
-  var collectionIsPlainObject
-  var funcResult
-  var getObjectKeys
-  var getPropName
-  var index
-  var isPropPresent
-  var isObjectPropertyPresent
-  var iterable
-  var length
-  var propIsPresent
-  var propName
-  var propNameStr
-  var props
-  var propValue
-  var T
+  var collectionIsArray;
+  var collectionIsArrayLikeObject;
+  var collectionIsPlainObject;
+  var funcResult;
+  var getObjectKeys;
+  var getPropName;
+  var index;
+  var isPropPresent;
+  var isObjectPropertyPresent;
+  var iterable;
+  var length;
+  var propIsPresent;
+  var propName;
+  var propNameStr;
+  var props;
+  var propValue;
+  var T;
   if (collection == null) {
     // Exit early
     // TODO: should an TypeError be thrown?
-    return
+    return;
   }
   if (!IsCallable(callbackFn)) {
-    throw new TypeError(callbackFn + ' is not a function')
+    throw new TypeError(callbackFn + ' is not a function');
   }
   if (thisArg) {
-    T = thisArg
+    T = thisArg;
   }
 
   /*
@@ -108,53 +108,53 @@ function innerLooper(collection, callbackFn, thisArg?) {
    * [Enumerability and ownership of properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties)
    * [get-prototype-chain](https://github.com/leahciMic/get-prototype-chain/blob/master/get-prototype-chain.js)
    */
-  getObjectKeys = defaultGetObjectKeys
-  isObjectPropertyPresent = defaultIsObjectPropertyPresent
+  getObjectKeys = defaultGetObjectKeys;
+  isObjectPropertyPresent = defaultIsObjectPropertyPresent;
 
-  collectionIsArray = Array.isArray(collection)
+  collectionIsArray = Array.isArray(collection);
   collectionIsArrayLikeObject =
     collection != null &&
     !IsCallable(collection) &&
-    typeof collection.length === 'number'
-  collectionIsPlainObject = isValidObject(collection)
+    typeof collection.length === 'number';
+  collectionIsPlainObject = isValidObject(collection);
 
-  index = 0
-  iterable = Object(collection)
+  index = 0;
+  iterable = Object(collection);
   if (collectionIsArray || collectionIsArrayLikeObject) {
-    length = ToLength(iterable.length)
+    length = ToLength(iterable.length);
     getPropName = function getIndex(index) {
-      return index
-    }
-    isPropPresent = HasProperty
+      return index;
+    };
+    isPropPresent = HasProperty;
   } else if (collectionIsPlainObject) {
-    props = getObjectKeys(collection)
-    length = props.length
+    props = getObjectKeys(collection);
+    length = props.length;
     getPropName = function getKey(index) {
-      return props[index]
-    }
-    isPropPresent = isObjectPropertyPresent
+      return props[index];
+    };
+    isPropPresent = isObjectPropertyPresent;
   }
   while (index < length) {
-    propName = getPropName(index)
-    propNameStr = String(propName)
-    propIsPresent = isPropPresent(iterable, propNameStr)
+    propName = getPropName(index);
+    propNameStr = String(propName);
+    propIsPresent = isPropPresent(iterable, propNameStr);
     if (propIsPresent) {
-      propValue = iterable[propNameStr]
-      funcResult = callbackFn.call(T, propValue, propName, collection)
+      propValue = iterable[propNameStr];
+      funcResult = callbackFn.call(T, propValue, propName, collection);
       if (funcResult === false) {
-        break
+        break;
       }
     }
-    index++
+    index++;
   }
 }
 
 function defaultGetObjectKeys(collection) {
-  return baseKeys(collection)
+  return baseKeys(collection);
 }
 
 function defaultIsObjectPropertyPresent(obj, P) {
-  return obj.hasOwnProperty(P)
+  return obj.hasOwnProperty(P);
 }
 
 export default innerLooper;
