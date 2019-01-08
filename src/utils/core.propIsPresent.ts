@@ -1,4 +1,4 @@
-import isPlainObject from 'lodash.isplainobject';
+import { isValidObject } from './typeCheckers';
 import IsCallable from 'es-abstract-is-callable';
 import HasProperty from 'es-abstract-has-property';
 
@@ -20,7 +20,7 @@ function isPropertyPresent(obj, P) {
   objIsArray = Array.isArray(obj)
   objIsArrayLikeObject =
     obj != null && !IsCallable(obj) && typeof obj.length === 'number'
-  objIsPlainObject = isPlainObject(obj)
+  objIsPlainObject = isValidObject(obj)
 
   if ((objIsArray || objIsArrayLikeObject) && isIndex(P, obj.length)) {
     isPropPresent = HasProperty

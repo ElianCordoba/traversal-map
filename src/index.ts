@@ -1,5 +1,5 @@
 import innerLooper from './utils/innerLooper';
-import isPlainObject from 'lodash.isplainobject';
+import { isValidObject } from './utils/typeCheckers';
 import merge from 'lodash.merge';
 
 const LOOP_CONTINUE = '0' // Alternate: `undefined`
@@ -69,7 +69,7 @@ function traversalMap(collection, callbackFn, options?) {
     [],
     SETTINGS,
     Array.isArray(collection),
-    isPlainObject(collection)
+    isValidObject(collection)
   )
 }
 
@@ -126,7 +126,7 @@ function forEachLoop(
       var skipLoop
 
       childValueIsCircular = checkingIsEnabled ? false : null
-      childValueMayLoop = Array.isArray(childValue) || isPlainObject(childValue)
+      childValueMayLoop = Array.isArray(childValue) || isValidObject(childValue)
       skipFnCall = false
       skipLoop = false
       if (valueIsArray) {
@@ -208,7 +208,7 @@ function forEachLoop(
        */
       childValuePostFn = parentCollection[keyOrIndex]
       childValuePostFnIsArray = Array.isArray(childValuePostFn)
-      childValuePostFnIsObject = isPlainObject(childValuePostFn)
+      childValuePostFnIsObject = isValidObject(childValuePostFn)
 
       /*
        * While skipping the function call may be optional, skipping the loop

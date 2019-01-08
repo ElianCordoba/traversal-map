@@ -18,7 +18,6 @@
     "es-abstract-has-property": "^0.1.0",
     "es-abstract-is-callable": "^0.1.0",
     "es-abstract-to-length": "^0.1.0",
-    "lodash.isplainobject": "^4.0.6",
     "lodash.merge": "^4.6.0"
   },
   "author": "Elian Cordoba <eliancordoba98@gmail.com> (github.com/ElianCordoba)",

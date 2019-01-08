@@ -1,4 +1,4 @@
-import isPlainObject from 'lodash.isplainobject';
+import { isValidObject } from './typeCheckers';
 import baseKeys from './baseKeys';
 import HasProperty from 'es-abstract-has-property';
 import IsCallable from 'es-abstract-is-callable';
@@ -116,7 +116,7 @@ function innerLooper(collection, callbackFn, thisArg?) {
     collection != null &&
     !IsCallable(collection) &&
     typeof collection.length === 'number'
-  collectionIsPlainObject = isPlainObject(collection)
+  collectionIsPlainObject = isValidObject(collection)
 
   index = 0
   iterable = Object(collection)
