@@ -1,5 +1,13 @@
 import innerLooper from './utils/innerLooper';
 import { isValidObject } from './utils/typeCheckers';
+import { Options } from './interfaces';
+
+const DEFAULTS = {
+  enableCircularReferenceChecking: true,
+  enablePathArray: false,
+  skipCircularReferences: false,
+  useDotNotationOnKeys: true
+}
 
 const LOOP_CONTINUE = '0' // Alternate: `undefined`
 const LOOP_BREAK_CURRENT = '10' // Alternate: `false`
@@ -23,42 +31,13 @@ function circularStats(value, ancestry) {
   }
 }
 
-/**
- * Loops recursively through an array or plain object with optional
- * consideration for circular references that is enabled by default.
- */
-function traversalMap(collection, callbackFn, options?) {
-  /*
-   * Handle option processing so that it only needs to be done once before
-   * passing it to the internal recursive loop.
-   */
-  const DEFAULTS = {
-    enableCircularReferenceChecking: true,
-    enablePathArray: false,
-    skipCircularReferences: false,
-    useDotNotationOnKeys: true
+function traversalMap(collection, callbackFn, options?: Options) {
+  if (options) {
+    // If it doesn't throw it means that the options were valid
+    validateOptions(options);
   }
-  const SETTINGS = { ...DEFAULTS, ...options }
-
-  /*
-   * Light value checking/validation/coercing. Prevents the need to check in
-   * each iteration.
-   * TODO: A more permanent solution should be checking / validating options
-   * before they are merged.
-   */
-  if (typeof SETTINGS.enableCircularReferenceChecking !== 'boolean') {
-    SETTINGS.enableCircularReferenceChecking =
-      DEFAULTS.enableCircularReferenceChecking
-  }
-  if (typeof SETTINGS.enablePathArray !== 'boolean') {
-    SETTINGS.enablePathArray = DEFAULTS.enablePathArray
-  }
-  if (typeof SETTINGS.skipCircularReferences !== 'boolean') {
-    SETTINGS.skipCircularReferences = DEFAULTS.skipCircularReferences
-  }
-  if (typeof SETTINGS.useDotNotationOnKeys !== 'boolean') {
-    SETTINGS.useDotNotationOnKeys = DEFAULTS.useDotNotationOnKeys
-  }
+  
+  const SETTINGS = { ...DEFAULTS, ...options || {} }
 
   forEachLoop(
     collection,
@@ -240,6 +219,16 @@ function forEachLoop(
     })
   }
   return loopReturnCode
+}
+
+function validateOptions(options: Options): void {
+  for (let key in options) {
+    const typeofOption = typeof options[key];
+    if (typeofOption !== 'boolean') {
+      throw new TypeError(`Ivalid option, ${key} sould be a boolean, instead got a ${typeofOption}`);
+    }
+  }
+  return;
 }
 
 export default traversalMap;
