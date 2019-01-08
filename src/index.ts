@@ -3,9 +3,7 @@ import { isValidObject } from './utils/typeCheckers';
 import { Options } from './interfaces';
 
 const DEFAULTS = {
-  enableCircularReferenceChecking: true,
   enablePathArray: false,
-  skipCircularReferences: false,
   useDotNotationOnKeys: true
 }
 
@@ -13,23 +11,6 @@ const LOOP_CONTINUE = '0' // Alternate: `undefined`
 const LOOP_BREAK_CURRENT = '10' // Alternate: `false`
 const LOOP_BREAK_ALL = '11'
 const LOOP_SKIP_CHILDREN = '20'
-
-function circularStats(value, ancestry) {
-  function detectCircularFindIndex(ancestor, ancestorindex) {
-    return Object.is(value, ancestor.value)
-  }
-  var ancestorIndex = ancestry.findIndex(detectCircularFindIndex)
-  var isCircular = ancestorIndex > -1
-  var ancestorPath
-  if (isCircular) {
-    ancestorPath = ancestry[ancestorIndex].path
-  }
-  return {
-    ancestorIndex: ancestorIndex,
-    ancestorPath: ancestorPath,
-    isCircular: isCircular
-  }
-}
 
 function traversalMap(collection, callbackFn, options?: Options) {
   if (options) {
@@ -44,7 +25,6 @@ function traversalMap(collection, callbackFn, options?: Options) {
     callbackFn,
     '',
     SETTINGS.enablePathArray ? [] : null,
-    [],
     SETTINGS,
     Array.isArray(collection),
     isValidObject(collection)
@@ -56,31 +36,15 @@ function forEachLoop(
   fn,
   path,
   pathArray,
-  ancestry,
   settings,
   valueIsArray,
   valueIsPlainObject
 ) {
-  var checkingIsEnabled = settings.enableCircularReferenceChecking
   var pathArrayIsEnabled = settings.enablePathArray
-  var skipCircularReferences = settings.skipCircularReferences
   var useDotNotationOnKeys = settings.useDotNotationOnKeys
   var loopReturnCode
 
   if (valueIsArray || valueIsPlainObject) {
-    /*
-     * Add a "family member" to the "family tree".
-     *
-     * Work on a copy of ancestry, because if we work on a reference, we would
-     * have to detect and remove siblings.
-     */
-    // There has to be a more performant way to make a shallow copy.
-    ancestry = ancestry.concat()
-    ancestry.push({
-      path: path,
-      value: value
-    })
-
     /*
      * Loop through each member of the collection.
      */
@@ -91,22 +55,13 @@ function forEachLoop(
     ) {
       var childLoopReturnCode
       var childValueIsCircular
-      var childValueMayLoop
       var childValuePostFn
       var childValuePostFnIsArray
       var childValuePostFnIsObject
-      var cStats
-      var cStatsPostFn
       var deepPath
       var deepPathArray
       var fnReturnCode
-      var skipFnCall
-      var skipLoop
 
-      childValueIsCircular = checkingIsEnabled ? false : null
-      childValueMayLoop = Array.isArray(childValue) || isValidObject(childValue)
-      skipFnCall = false
-      skipLoop = false
       if (valueIsArray) {
         deepPath = path + '[' + keyOrIndex + ']'
       } else if (valueIsPlainObject) {
@@ -116,6 +71,7 @@ function forEachLoop(
           deepPath = path + '[' + keyOrIndex + ']'
         }
       }
+      
       if (pathArrayIsEnabled) {
         deepPathArray = pathArray.concat()
         deepPathArray.push(keyOrIndex)
@@ -123,33 +79,15 @@ function forEachLoop(
         deepPathArray = null
       }
 
-      /*
-       * Prevent the cost of the circular reference check on values that are
-       * not iterated through.
-       */
-      if (childValueMayLoop && checkingIsEnabled) {
-        cStats = circularStats(childValue, ancestry)
-        childValueIsCircular = cStats.isCircular
-        if (childValueIsCircular) {
-          if (skipCircularReferences) {
-            skipFnCall = true
-          } else {
-            childValue = ['[CircularReference]', cStats.ancestorPath]
-          }
-        }
-      }
-
-      if (!skipFnCall) {
-        fnReturnCode = fn.call(
-          parentCollection,
-          childValue,
-          keyOrIndex,
-          parentCollection,
-          deepPath,
-          deepPathArray,
-          childValueIsCircular
-        )
-      }
+      fnReturnCode = fn.call(
+        parentCollection,
+        childValue,
+        keyOrIndex,
+        parentCollection,
+        deepPath,
+        deepPathArray,
+        childValueIsCircular
+      )
 
       /*
        * -   If the code is a number, convert it to a string
@@ -193,15 +131,12 @@ function forEachLoop(
        * iteration with a circular reference is NOT optional.
        */
       if (childValuePostFnIsArray || childValuePostFnIsObject) {
-        cStatsPostFn = circularStats(childValuePostFn, ancestry)
-        skipLoop = cStatsPostFn.isCircular
-        if (!skipLoop && fnReturnCode !== LOOP_SKIP_CHILDREN) {
+        if (fnReturnCode !== LOOP_SKIP_CHILDREN) {
           childLoopReturnCode = forEachLoop(
             childValuePostFn,
             fn,
             deepPath,
             deepPathArray,
-            ancestry,
             settings,
             childValuePostFnIsArray,
             childValuePostFnIsObject
