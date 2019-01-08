@@ -1,6 +1,5 @@
 import innerLooper from './utils/innerLooper';
 import { isValidObject } from './utils/typeCheckers';
-import merge from 'lodash.merge';
 
 const LOOP_CONTINUE = '0' // Alternate: `undefined`
 const LOOP_BREAK_CURRENT = '10' // Alternate: `false`
@@ -39,7 +38,7 @@ function traversalMap(collection, callbackFn, options?) {
     skipCircularReferences: false,
     useDotNotationOnKeys: true
   }
-  const SETTINGS = merge({}, DEFAULTS, options)
+  const SETTINGS = { ...DEFAULTS, ...options }
 
   /*
    * Light value checking/validation/coercing. Prevents the need to check in
