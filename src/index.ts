@@ -55,32 +55,11 @@ function forEachLoop(
         deepPath
       );
 
-      /*
-       * -   If the code is a number, convert it to a string
-       * -   If the code is undefined, convert it to `LOOP_CONTINUE`
-       * -   If the code is false, convert it to `LOOP_BREAK_CURRENT`
-       */
-      if (Number.isFinite(fnReturnCode)) {
-        fnReturnCode = fnReturnCode.toString();
-      } else if (typeof fnReturnCode === 'undefined') {
-        fnReturnCode = LOOP.CONTINUE;
-      } else if (fnReturnCode === false) {
-        fnReturnCode = LOOP.BREAK_CURRENT;
-      }
-
-      /*
-       * Break out of the current loop if the fn return code says so.
-       */
+      fnReturnCode = getFunctionReturnCode(fnReturnCode);
+      
       if (fnReturnCode === LOOP.BREAK_CURRENT) {
         return false;
-      }
-
-      /*
-       * Break out of the current loop if the fn return code says so AND
-       * tell all ancestor loops that they should break.
-       */
-      if (fnReturnCode === LOOP.BREAK_ALL) {
-        loopReturnCode = fnReturnCode;
+      } else if (fnReturnCode === LOOP.BREAK_ALL) {
         return false;
       }
 
@@ -91,11 +70,6 @@ function forEachLoop(
       let childValuePostFn = parentCollection[keyOrIndex];
       let childValuePostFnIsArray = Array.isArray(childValuePostFn);
       let childValuePostFnIsObject = isValidObject(childValuePostFn);
-
-      /*
-       * While skipping the function call may be optional, skipping the loop
-       * iteration with a circular reference is NOT optional.
-       */
 
       if (childValuePostFnIsArray || childValuePostFnIsObject) {
         if (fnReturnCode !== LOOP.SKIP_CHILDREN) {
@@ -108,11 +82,7 @@ function forEachLoop(
             childValuePostFnIsObject
           );
 
-          /*
-           * Break out of the current loop if the loop return code says so.
-           */
           if (childLoopReturnCode === LOOP.BREAK_ALL) {
-            loopReturnCode = childLoopReturnCode;
             return false;
           }
         }
@@ -132,4 +102,20 @@ function validateOptions(options: Options): void {
     }
   }
   return;
+}
+
+/*
+* If the code is:
+* number   = convert it to a string
+* undefined = convert it to `LOOP_CONTINUE`
+* false    = convert it to `LOOP_BREAK_CURRENT`
+*/
+function getFunctionReturnCode(code: number | undefined | false) {
+  if (typeof code === 'undefined') {
+    return LOOP.CONTINUE;
+  } else if (code === false) {
+    return LOOP.BREAK_CURRENT;
+  } else if (Number.isFinite(code)) {
+    return code.toString();
+  }
 }
