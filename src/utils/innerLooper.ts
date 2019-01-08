@@ -66,7 +66,7 @@ import ToLength from 'es-abstract-to-length';
  *
  * Iteration may be stopped early by having callbackFn return (boolean) false.
  */
-function forEach(collection, callbackFn, thisArg?) {
+function innerLooper(collection, callbackFn, thisArg?) {
   var collectionIsArray
   var collectionIsArrayLikeObject
   var collectionIsPlainObject
@@ -157,4 +157,4 @@ function defaultIsObjectPropertyPresent(obj, P) {
   return obj.hasOwnProperty(P)
 }
 
-export default forEach;
+export default innerLooper;

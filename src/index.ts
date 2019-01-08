@@ -1,4 +1,4 @@
-import forEach from './utils/core.forEach';
+import innerLooper from './utils/innerLooper';
 import isPlainObject from 'lodash.isplainobject';
 import merge from 'lodash.merge';
 
@@ -28,7 +28,7 @@ function circularStats(value, ancestry) {
  * Loops recursively through an array or plain object with optional
  * consideration for circular references that is enabled by default.
  */
-function forEachSafe(collection, callbackFn, options?) {
+function traversalMap(collection, callbackFn, options?) {
   /*
    * Handle option processing so that it only needs to be done once before
    * passing it to the internal recursive loop.
@@ -106,7 +106,7 @@ function forEachLoop(
     /*
      * Loop through each member of the collection.
      */
-    forEach(value, function forEachCollectionIteratee(
+    innerLooper(value, function forEachCollectionIteratee(
       childValue,
       keyOrIndex,
       parentCollection
@@ -243,4 +243,4 @@ function forEachLoop(
   return loopReturnCode
 }
 
-export default forEachSafe;
+export default traversalMap;
