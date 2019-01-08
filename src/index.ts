@@ -1,9 +1,9 @@
 import innerLooper from './utils/innerLooper';
 import { isValidObject } from './utils/typeCheckers';
 import { LOOP, DEFAULTS } from './constants';
-import { Options } from './interfaces';
+import { Options, Iterable } from './interfaces';
 
-function traversalMap(collection, callbackFn, options?: Options) {
+export default function traversalMap(collection: Iterable, callbackFn: Function, options?: Options) {
   if (options) {
     // If it doesn't throw it means that the options were valid
     validateOptions(options);
@@ -23,30 +23,24 @@ function traversalMap(collection, callbackFn, options?: Options) {
 }
 
 function forEachLoop(
-  value,
-  fn,
-  path,
-  pathArray,
-  settings,
-  valueIsArray,
-  valueIsPlainObject
+  value: any,
+  fn: Function,
+  path: string,
+  pathArray: string[] | null,
+  settings: Options,
+  valueIsArray: boolean,
+  valueIsPlainObject: boolean
 ) {
-  var loopReturnCode
+  let loopReturnCode;
 
   if (valueIsArray || valueIsPlainObject) {
-    innerLooper(value, function forEachCollectionIteratee(
+    innerLooper(value, (
       childValue,
       keyOrIndex,
       parentCollection
-    ) {
-      var childLoopReturnCode
-      var childValuePostFn
-      var childValuePostFnIsArray
-      var childValuePostFnIsObject
-      var deepPath
-      var deepPathArray
-      var fnReturnCode
+    ) => {
 
+      let deepPath
       if (valueIsArray) {
         deepPath = path + '[' + keyOrIndex + ']'
       } else if (valueIsPlainObject) {
@@ -57,14 +51,15 @@ function forEachLoop(
         }
       }
 
+      let deepPathArray
       if (settings.enablePathArray) {
-        deepPathArray = pathArray.concat()
+        deepPathArray = pathArray!.concat()
         deepPathArray.push(keyOrIndex)
       } else {
         deepPathArray = null
       }
 
-      fnReturnCode = fn.call(
+      let fnReturnCode = fn.call(
         parentCollection,
         childValue,
         keyOrIndex,
@@ -105,17 +100,18 @@ function forEachLoop(
        * Get the value at `keyOrIndex` again, because it may have been
        * changed by `fn` or a sibling `forEachLoop`.
        */
-      childValuePostFn = parentCollection[keyOrIndex]
-      childValuePostFnIsArray = Array.isArray(childValuePostFn)
-      childValuePostFnIsObject = isValidObject(childValuePostFn)
+      let childValuePostFn = parentCollection[keyOrIndex]
+      let childValuePostFnIsArray = Array.isArray(childValuePostFn)
+      let childValuePostFnIsObject = isValidObject(childValuePostFn)
 
       /*
        * While skipping the function call may be optional, skipping the loop
        * iteration with a circular reference is NOT optional.
        */
+      
       if (childValuePostFnIsArray || childValuePostFnIsObject) {
         if (fnReturnCode !== LOOP.SKIP_CHILDREN) {
-          childLoopReturnCode = forEachLoop(
+          let childLoopReturnCode = forEachLoop(
             childValuePostFn,
             fn,
             deepPath,
@@ -148,5 +144,3 @@ function validateOptions(options: Options): void {
   }
   return;
 }
-
-export default traversalMap;
