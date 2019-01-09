@@ -56,7 +56,7 @@ function forEachLoop(
       );
 
       fnReturnCode = getFunctionReturnCode(fnReturnCode);
-      
+
       if (fnReturnCode === LOOP.BREAK_CURRENT) {
         return false;
       } else if (fnReturnCode === LOOP.BREAK_ALL) {
@@ -64,22 +64,22 @@ function forEachLoop(
       }
 
       /*
-       * Get the value at `keyOrIndex` again, because it may have been
-       * changed by `fn` or a sibling `forEachLoop`.
+       * This is necesary because calling the `fn` may have changed the value.
+       * For example if you dont return the value in the `fn` here it will be undefined.
        */
-      let childValuePostFn = parentCollection[keyOrIndex];
-      let childValuePostFnIsArray = Array.isArray(childValuePostFn);
-      let childValuePostFnIsObject = isValidObject(childValuePostFn);
+      childValue = parentCollection[keyOrIndex];
+      valueIsArray = Array.isArray(childValue);
+      valueIsPlainObject = isValidObject(childValue);
 
-      if (childValuePostFnIsArray || childValuePostFnIsObject) {
+      if (valueIsArray || valueIsPlainObject) {
         if (fnReturnCode !== LOOP.SKIP_CHILDREN) {
           let childLoopReturnCode = forEachLoop(
-            childValuePostFn,
+            childValue,
             fn,
             deepPath,
             settings,
-            childValuePostFnIsArray,
-            childValuePostFnIsObject
+            valueIsArray,
+            valueIsPlainObject
           );
 
           if (childLoopReturnCode === LOOP.BREAK_ALL) {
@@ -105,12 +105,12 @@ function validateOptions(options: Options): void {
 }
 
 /*
-* If the code is:
-* number   = convert it to a string
-* undefined = convert it to `LOOP_CONTINUE`
-* false    = convert it to `LOOP_BREAK_CURRENT`
-*/
-function getFunctionReturnCode(code: number | undefined | false) {
+ * If the code is:
+ * number   = convert it to a string
+ * undefined = convert it to `LOOP_CONTINUE`
+ * false    = convert it to `LOOP_BREAK_CURRENT`
+ */
+function getFunctionReturnCode(code: number | undefined | false) {
   if (typeof code === 'undefined') {
     return LOOP.CONTINUE;
   } else if (code === false) {
