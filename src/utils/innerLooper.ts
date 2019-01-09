@@ -1,5 +1,4 @@
 import { isValidObject } from './typeCheckers';
-import baseKeys from './baseKeys';
 import HasProperty from 'es-abstract-has-property';
 import IsCallable from 'es-abstract-is-callable';
 import ToLength from 'es-abstract-to-length';
@@ -71,7 +70,6 @@ function innerLooper(collection, callbackFn, thisArg?) {
   var collectionIsArrayLikeObject;
   var collectionIsPlainObject;
   var funcResult;
-  var getObjectKeys;
   var getPropName;
   var index;
   var isPropPresent;
@@ -81,7 +79,6 @@ function innerLooper(collection, callbackFn, thisArg?) {
   var propIsPresent;
   var propName;
   var propNameStr;
-  var props;
   var propValue;
   var T;
   if (collection == null) {
@@ -108,7 +105,6 @@ function innerLooper(collection, callbackFn, thisArg?) {
    * [Enumerability and ownership of properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties)
    * [get-prototype-chain](https://github.com/leahciMic/get-prototype-chain/blob/master/get-prototype-chain.js)
    */
-  getObjectKeys = defaultGetObjectKeys;
   isObjectPropertyPresent = defaultIsObjectPropertyPresent;
 
   collectionIsArray = Array.isArray(collection);
@@ -127,7 +123,12 @@ function innerLooper(collection, callbackFn, thisArg?) {
     };
     isPropPresent = HasProperty;
   } else if (collectionIsPlainObject) {
-    props = getObjectKeys(collection);
+    let props = [] as any;
+    for (var key in Object(collection)) {
+      if (collection.hasOwnProperty(key) && key !== 'constructor') {
+        props.push(key);
+      }
+    }
     length = props.length;
     getPropName = function getKey(index) {
       return props[index];
@@ -147,10 +148,6 @@ function innerLooper(collection, callbackFn, thisArg?) {
     }
     index++;
   }
-}
-
-function defaultGetObjectKeys(collection) {
-  return baseKeys(collection);
 }
 
 function defaultIsObjectPropertyPresent(obj, P) {
