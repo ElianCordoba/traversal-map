@@ -1,8 +1,7 @@
 import { isValidObject } from './typeCheckers';
 import HasProperty from 'es-abstract-has-property';
 import IsCallable from 'es-abstract-is-callable';
-import ToLength from 'es-abstract-to-length';
-
+import { Iterable } from '../interfaces';
 /*
  * COLLECTION
  *
@@ -65,7 +64,15 @@ import ToLength from 'es-abstract-to-length';
  *
  * Iteration may be stopped early by having callbackFn return (boolean) false.
  */
-function innerLooper(collection, callbackFn, thisArg?) {
+function innerLooper(
+  collection: any, // @TODO Iterable,
+  callbackFn: (
+    currentValue: any,
+    keyOrIndex: string | number,
+    collection: Iterable
+  ) => void,
+  thisArg?: any
+) {
   var collectionIsArray;
   var collectionIsArrayLikeObject;
   var collectionIsPlainObject;
@@ -113,14 +120,12 @@ function innerLooper(collection, callbackFn, thisArg?) {
     !IsCallable(collection) &&
     typeof collection.length === 'number';
   collectionIsPlainObject = isValidObject(collection);
-
+  
   index = 0;
   iterable = Object(collection);
   if (collectionIsArray || collectionIsArrayLikeObject) {
-    length = ToLength(iterable.length);
-    getPropName = function getIndex(index) {
-      return index;
-    };
+    length = iterable.length;
+    getPropName = index => index;
     isPropPresent = HasProperty;
   } else if (collectionIsPlainObject) {
     let props = [] as any;
@@ -130,11 +135,10 @@ function innerLooper(collection, callbackFn, thisArg?) {
       }
     }
     length = props.length;
-    getPropName = function getKey(index) {
-      return props[index];
-    };
+    getPropName = index => props[index];
     isPropPresent = isObjectPropertyPresent;
   }
+
   while (index < length) {
     propName = getPropName(index);
     propNameStr = String(propName);
