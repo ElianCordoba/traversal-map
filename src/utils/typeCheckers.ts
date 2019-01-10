@@ -19,3 +19,7 @@ function isInstanceOfForbbidenClass(obj: any): boolean {
     obj instanceof WeakSet
   );
 }
+
+export function isFunction(value: any): value is Function {
+  return typeof value === 'function' && value.call;
+}
