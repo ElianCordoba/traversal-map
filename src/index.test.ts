@@ -1,5 +1,9 @@
 import traversalMap from './index';
 
+// Variables
+let keys = [] as any;
+let values = [] as any;
+
 // Sample data
 const simpleObject = { a: 1, b: 2, c: { d: 3, e: { f: 4 } }, g: 5 };
 const simpleArray = [1, 2, 'a', null, {}, []];
@@ -7,10 +11,12 @@ const simpleArray = [1, 2, 'a', null, {}, []];
 // Functions
 const identity = i => i;
 
-test('Should iterate through all levels of an object', () => {
-  let keys = [] as any;
-  let values = [] as any;
+afterEach(() => {
+  keys = [];
+  values = [];
+});
 
+test('Should iterate through all levels of an object', () => {
   traversalMap(simpleObject, (value, key) => {
     keys.push(key);
 
@@ -24,10 +30,9 @@ test('Should iterate through all levels of an object', () => {
 });
 
 test('Should iterate through all elements in an array', () => {
-  let items = [] as any;
-  traversalMap(simpleArray, item => items.push(item));
+  traversalMap(simpleArray, value => values.push(value));
 
-  expect(items).toEqual([1, 2, 'a', null, {}, []]);
+  expect(values).toEqual([1, 2, 'a', null, {}, []]);
 });
 
 test('Should throw on invalid options', () => {
@@ -46,4 +51,14 @@ test('Should return right error message', () => {
   ).toThrowError(
     'Ivalid option, useDotNotationOnKeys sould be a boolean, instead got a number'
   );
+});
+
+test('Should treat length property as a normal properpy if the value is not a number', () => {
+  traversalMap({ a: { length: 'ups' } }, (value, key) => keys.push(key));
+  expect(keys).toEqual(['a', 'length']);
+});
+
+test('Should treat length property as index if the value is a number', () => {
+  traversalMap({ a: { length: 1 } }, (value, key) => keys.push(key));
+  expect(keys).toEqual(['a']);
 });
