@@ -67,19 +67,19 @@ function forEachLoop(
        * This is necesary because calling the `fn` may have changed the value.
        * For example if you dont return the value in the `fn` here it will be undefined.
        */
-      childValue = parentCollection[keyOrIndex];
-      valueIsArray = Array.isArray(childValue);
-      valueIsPlainObject = isValidObject(childValue);
+      let childValuePostFn = parentCollection[keyOrIndex];
+      let childValuePostFnIsArray = Array.isArray(childValuePostFn);
+      let childValuePostFnIsObject = isValidObject(childValuePostFn);
 
-      if (valueIsArray || valueIsPlainObject) {
+      if (childValuePostFnIsArray || childValuePostFnIsObject) {
         if (fnReturnCode !== LOOP.SKIP_CHILDREN) {
           let childLoopReturnCode = forEachLoop(
-            childValue,
+            childValuePostFn,
             fn,
             deepPath,
             settings,
-            valueIsArray,
-            valueIsPlainObject
+            childValuePostFnIsArray,
+            childValuePostFnIsObject
           );
 
           if (childLoopReturnCode === LOOP.BREAK_ALL) {
