@@ -2,7 +2,7 @@ import { isValidObject, isFunction } from './typeCheckers';
 import { Iterable } from '../interfaces';
 
 function innerLooper(
-  collection: any, // @TODO Iterable,
+  collection: Iterable,
   callbackFn: (
     currentValue: any,
     keyOrIndex: string | number,
@@ -17,7 +17,7 @@ function innerLooper(
   const collectionIsArrayLikeObject =
     collection !== null &&
     !isFunction(collection) &&
-    typeof collection.length === 'number';
+    typeof (collection as any).length  === 'number';
   const collectionIsPlainObject = isValidObject(collection);
 
   let length;

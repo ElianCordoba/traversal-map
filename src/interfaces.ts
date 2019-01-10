@@ -2,4 +2,5 @@ export interface Options {
   useDotNotationOnKeys?: boolean;
 }
 
-export type Iterable = Object | any[];
+type ArrayLike = { lenght: number };
+export type Iterable = Object | Array<any> | ArrayLike;
