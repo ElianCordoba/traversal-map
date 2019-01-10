@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ElianCordoba/traversal-map.svg?branch=master)](https://travis-ci.org/ElianCordoba/traversal-map)
+
 # Traversal map
 
 Iterate through all elements in a object or array calling a callback function.
