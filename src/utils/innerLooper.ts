@@ -70,59 +70,29 @@ function innerLooper(
     currentValue: any,
     keyOrIndex: string | number,
     collection: Iterable
-  ) => void,
+  ) => any,
   thisArg?: any
 ) {
-  var collectionIsArray;
-  var collectionIsArrayLikeObject;
-  var collectionIsPlainObject;
-  var funcResult;
-  var getPropName;
-  var index;
-  var isPropPresent;
-  var isObjectPropertyPresent;
-  var iterable;
-  var length;
-  var propIsPresent;
-  var propName;
-  var propNameStr;
-  var propValue;
-  var T;
-  if (collection == null) {
-    // Exit early
-    // TODO: should an TypeError be thrown?
+  if (collection === null) {
     return;
   }
-  if (!IsCallable(callbackFn)) {
-    throw new TypeError(callbackFn + ' is not a function');
-  }
-  if (thisArg) {
-    T = thisArg;
-  }
 
-  /*
-   * Someday `getObjectKeys` and `isObjectPropertyPresent` may be configurable
-   * options. This would allow for (non-array-like) objects to iterate over
-   * inherited properties.
-   *
-   * Arrays and array-like objects will use the same "keys" and "property is
-   * present" process as defined for the `Array.prototype.forEach` method by
-   * the ECMAScript standard. As a result, this will not be configurable.
-   *
-   * [Enumerability and ownership of properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties)
-   * [get-prototype-chain](https://github.com/leahciMic/get-prototype-chain/blob/master/get-prototype-chain.js)
-   */
-  isObjectPropertyPresent = defaultIsObjectPropertyPresent;
+  const T = thisArg;
 
-  collectionIsArray = Array.isArray(collection);
-  collectionIsArrayLikeObject =
+  const collectionIsArray = Array.isArray(collection);
+  const collectionIsArrayLikeObject =
     collection != null &&
     !IsCallable(collection) &&
     typeof collection.length === 'number';
-  collectionIsPlainObject = isValidObject(collection);
+  const collectionIsPlainObject = isValidObject(collection);
   
-  index = 0;
-  iterable = Object(collection);
+  let getPropName: (index: number | string) => any = () => {};
+  const iterable = Object(collection);
+  let isPropPresent;
+  var length;
+
+
+  // Setup before iteration
   if (collectionIsArray || collectionIsArrayLikeObject) {
     length = iterable.length;
     getPropName = index => index;
@@ -136,26 +106,26 @@ function innerLooper(
     }
     length = props.length;
     getPropName = index => props[index];
-    isPropPresent = isObjectPropertyPresent;
+    isPropPresent = (obj: Object, prop: string) => obj.hasOwnProperty(prop);
   }
-
+  
+  let propName;
+  let propIsPresent;
+  let propValue;
+  let fnResult;
+  let index = 0;
   while (index < length) {
     propName = getPropName(index);
-    propNameStr = String(propName);
-    propIsPresent = isPropPresent(iterable, propNameStr);
+    propIsPresent = isPropPresent(iterable, propName);
     if (propIsPresent) {
-      propValue = iterable[propNameStr];
-      funcResult = callbackFn.call(T, propValue, propName, collection);
-      if (funcResult === false) {
+      propValue = iterable[propName];
+      fnResult = callbackFn.call(T, propValue, propName, collection);
+      if (fnResult === false) {
         break;
       }
     }
     index++;
   }
-}
-
-function defaultIsObjectPropertyPresent(obj, P) {
-  return obj.hasOwnProperty(P);
 }
 
 export default innerLooper;
