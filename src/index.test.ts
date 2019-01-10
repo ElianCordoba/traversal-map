@@ -62,3 +62,11 @@ test('Should treat length property as index if the value is a number', () => {
   traversalMap({ a: { length: 1 } }, (value, key) => keys.push(key));
   expect(keys).toEqual(['a']);
 });
+
+/* Uncomment to debug the library
+test.only('Debug test', () => {
+  traversalMap(simpleObject, () => {
+    debugger;
+  });
+});
+*/
