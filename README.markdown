@@ -24,8 +24,8 @@ const data = {
   }
 };
 
-traversalMap(data, (value, keyOrIndex, path)) {
-  console.log(`${value} / ${keyOrIndex} / ${path}`)
+traversalMap(data, (value: any, keyOrIndex: string | number, path: string) => {
+  console.log(`${value} / ${keyOrIndex} / ${path}`);
 });
 
 /*
