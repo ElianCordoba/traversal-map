@@ -1,7 +1,10 @@
 {
   "name": "traversal-map",
   "version": "0.0.2",
-  "description": "WIP",
+  "description": "Iterate through a nested object or array invoking a callback function. Having the key, value and path of the current iteration available",
+  "keywords": [
+    "map", "for-each", "deep", "nested", "iterate", "recursive", "key", "tree", "colection", "flow control"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -10,10 +13,7 @@
     "test-watch": "jest --watch",
     "test-debug": "node --inspect-brk node_modules/.bin/jest --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+github.com:ElianCordoba/traversal-map"
-  },
+  "repository": "ElianCordoba/traversal-map",
   "author": "Elian Cordoba <eliancordoba98@gmail.com> (github.com/ElianCordoba)",
   "license": "BSD-3-Clause",
   "devDependencies": {
