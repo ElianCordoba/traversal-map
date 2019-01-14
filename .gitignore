@@ -12,6 +12,7 @@ dist
 .tmp
 package-lock.json
 test.js
+internal-roadmap
 
 # Numerous always-ignore extensions
 *.diff
