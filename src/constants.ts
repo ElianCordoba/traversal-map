@@ -1,5 +1,4 @@
 export const DEFAULTS = {
-  enablePathArray: false,
   useDotNotationOnKeys: true
 };
 
