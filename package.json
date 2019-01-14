@@ -1,6 +1,6 @@
 {
   "name": "traversal-map",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Iterate through a nested object or array invoking a callback function. Having the key, value and path of the current iteration available",
   "keywords": [
     "map", "for-each", "deep", "nested", "iterate", "recursive", "key", "tree", "colection", "flow control"
