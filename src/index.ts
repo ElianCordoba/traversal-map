@@ -44,7 +44,7 @@ function forEachLoop(
         if (settings.useDotNotationOnKeys) {
           deepPath = path ? path + '.' + keyOrIndex : keyOrIndex;
         } else {
-          deepPath = path + '[' + keyOrIndex + ']';
+          deepPath = `${path}['${keyOrIndex}']`;
         }
       }
 
