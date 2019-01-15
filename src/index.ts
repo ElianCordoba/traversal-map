@@ -47,16 +47,22 @@ function forEachLoop(
           deepPath = `${path}['${keyOrIndex}']`;
         }
       }
-
-      let fnReturnCode = fn.call(
-        parentCollection,
-        childValue,
-        keyOrIndex,
-        deepPath
-      );
+      
+      const shoudSkipFnCall = settings.skipNodes && childValue !== null && typeof childValue === 'object';
+      
+      let fnReturnCode;
+      if (!shoudSkipFnCall) {
+        fnReturnCode = fn.call(
+          parentCollection,
+          childValue,
+          keyOrIndex,
+          deepPath
+        );
+      }
 
       fnReturnCode = getFunctionReturnCode(fnReturnCode);
 
+      // @TODO review
       if (fnReturnCode === LOOP.BREAK_CURRENT) {
         return false;
       } else if (fnReturnCode === LOOP.BREAK_ALL) {

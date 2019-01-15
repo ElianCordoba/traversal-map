@@ -1,5 +1,6 @@
 export interface Options {
   useDotNotationOnKeys?: boolean;
+  skipNodes?: boolean;
 }
 
 type ArrayLike = { lenght: number };

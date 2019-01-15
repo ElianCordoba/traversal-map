@@ -104,6 +104,23 @@ test('Should return path in bracked notation if the option useDotNotationOnKeys 
   expect(pathC).toBe(`['g']`);
 });
 
+test('Should skip nodes if the option skipNodes is eneable', () => {
+  traversalMap(
+    simpleObject,
+    (value, key) => keys.push(key),
+    { skipNodes: true }
+  );
+  expect(keys).toEqual(['a', 'b', 'd', 'f', 'g']);
+  keys = [];
+  
+  traversalMap(
+    nestedObject,
+    (value, key) => keys.push(key),
+    { skipNodes: true }
+  );
+  expect(keys).toEqual([ 'a', 'b', 'd', 'f', 0, 1, 2, 'g' ]);
+});
+
 test('Should handle big objects properly', () => {
   expect(() => traversalMap(bigObject, identity)).not.toThrow();
 });

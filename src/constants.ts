@@ -1,7 +1,8 @@
 import { Options } from "./interfaces";
 
 export const DEFAULTS: Options = {
-  useDotNotationOnKeys: true
+  useDotNotationOnKeys: true,
+  skipNodes: false
 };
 
 interface FlowControlReturnValues {
