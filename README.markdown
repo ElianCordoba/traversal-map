@@ -71,5 +71,20 @@ You can modify the flow of the iteration returning special values:
 
 `'20'`: Skip child elements of the current element.
 
+## Testing
+
+```
+npm run test            // Run tests once
+npm run test-with-cover // Run tests once and get coverage information
+npm run test-watch      // Tests in watch mode 
+```
+
+### Debugging:
+
+```
+npm run test-debug
+```
+This will run all test in watch mode also allowing you to put breakpoints , both in the tests and the code, then you have to launch `Debug Jest Tests` from vscode and you are good to go. You can uncoment the debug test in ./src/index.test.ts if you don't know where to start.
+
 ## About
 I needed to iterate over a deeply nested object and gather the path to each property, so I looked around and found [for-each-safe](https://github.com/npetruzzelli/for-each-safe). I liked the idea so I clonned, migrated it to Typescript, added tests and made it faster and smaller (mine is less safe than the original as it checks for less edgy cases, but for my purpose and the majority of people out there, is more than enough).

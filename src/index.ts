@@ -39,12 +39,12 @@ function forEachLoop(
     innerLooper(value, (childValue, keyOrIndex, parentCollection) => {
       let deepPath;
       if (valueIsArray) {
-        deepPath = path + '[' + keyOrIndex + ']';
+        deepPath = `${path}[${keyOrIndex}]`;
       } else if (valueIsPlainObject) {
         if (settings.useDotNotationOnKeys) {
-          deepPath = path ? path + '.' + keyOrIndex : keyOrIndex;
+          deepPath = path ? `${path}.${keyOrIndex}` : keyOrIndex;
         } else {
-          deepPath = path + '[' + keyOrIndex + ']';
+          deepPath = `${path}['${keyOrIndex}']`;
         }
       }
 
