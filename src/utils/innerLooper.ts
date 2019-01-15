@@ -22,7 +22,7 @@ function innerLooper(
 
   let length;
   const iterable = Object(collection);
-  let getPropName: (index: number | string) => any = () => {}; 
+  let getPropName: (index: number | string) => any = () => {};
 
   // Setup before iteration
   if (collectionIsArray || collectionIsArrayLikeObject) {

@@ -100,11 +100,13 @@ function forEachLoop(
 
 function validateOptions(options: Options): void {
   for (let key in options) {
-    const typeofOption = typeof options[key];
-    if (typeofOption !== 'boolean') {
-      throw new TypeError(
-        `Ivalid option, ${key} sould be a boolean, instead got a ${typeofOption}`
-      );
+    if (options.hasOwnProperty(key)) {
+      const typeofOption = typeof options[key];
+      if (typeofOption !== 'boolean') {
+        throw new TypeError(
+          `Ivalid option, ${key} sould be a boolean, instead got a ${typeofOption}`
+        );
+      }
     }
   }
   return;

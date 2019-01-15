@@ -104,7 +104,7 @@ test('Should return path in bracked notation if the option useDotNotationOnKeys 
   expect(pathC).toBe(`['g']`);
 });
 
-test('Should skip nodes if the option skipNodes is eneable', () => {
+test('Should skip nodes if the option skipNodes is eneabled', () => {
   traversalMap(
     simpleObject,
     (value, key) => keys.push(key),
