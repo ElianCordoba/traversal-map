@@ -8,6 +8,7 @@
 - Blazing fast
 - Types out of the box
 - No dependencies
+- Tiny
 
 ## Installation Using [npm](https://docs.npmjs.com/getting-started/installing-npm-packages-locally)
 

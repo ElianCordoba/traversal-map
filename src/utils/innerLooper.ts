@@ -30,7 +30,7 @@ function innerLooper(
     getPropName = index => index;
   } else if (collectionIsPlainObject) {
     let props = [] as any;
-    for (var key in Object(collection)) {
+    for (let key in Object(collection)) {
       if (collection.hasOwnProperty(key) && key !== 'constructor') {
         props.push(key);
       }
