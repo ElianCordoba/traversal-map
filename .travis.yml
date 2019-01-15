@@ -4,5 +4,5 @@ node_js :
 script:
   - npm test-with-cover
 # Send coverage data to Coveralls
-after_success: : 
+after_success:
   - "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js"
