@@ -6,6 +6,7 @@
 # directory this `.gitignore` file is currently located in.
 **/node_modules
 dist
+coverage
 
 # Ignore the following files and directories in the directory this `.gitignore`
 # file is currently located in.

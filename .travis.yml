@@ -3,3 +3,6 @@ node_js :
   - stable
 script:
   - npm test
+# Send coverage data to Coveralls
+after_success: : 
+  - "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js"
