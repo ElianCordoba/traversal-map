@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ElianCordoba/traversal-map.svg?branch=master)](https://travis-ci.org/ElianCordoba/traversal-map)
+[![Coverage Status](https://coveralls.io/repos/github/ElianCordoba/traversal-map/badge.svg?branch=master)](https://coveralls.io/github/ElianCordoba/traversal-map?branch=master)
 
 # Traversal map
 
