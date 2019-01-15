@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/ElianCordoba/traversal-map.svg?branch=master)](https://travis-ci.org/ElianCordoba/traversal-map)
 [![Coverage Status](https://coveralls.io/repos/github/ElianCordoba/traversal-map/badge.svg?branch=master)](https://coveralls.io/github/ElianCordoba/traversal-map?branch=master)
 [![CodeFactor](https://www.codefactor.io/repository/github/eliancordoba/traversal-map/badge)](https://www.codefactor.io/repository/github/eliancordoba/traversal-map)
+[![Known Vulnerabilities](https://snyk.io/test/github/ElianCordoba/traversal-map/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ElianCordoba/traversal-map?targetFile=package.json)
 
 # Traversal map
 
