@@ -1,4 +1,5 @@
 import traversalMap from './index';
+import bigObject from './bigObject';
 
 // Variables
 let keys = [] as any;
@@ -101,6 +102,10 @@ test('Should return path in bracked notation if the option useDotNotationOnKeys 
   expect(pathA).toBe(`['c']['d']`);
   expect(pathB).toBe(`['c']['e'][1]['f']`);
   expect(pathC).toBe(`['g']`);
+});
+
+test('Should handle big objects properly', () => {
+  expect(() => traversalMap(bigObject, identity)).not.toThrow();
 });
 
 /* Uncomment to debug the library
