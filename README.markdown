@@ -5,6 +5,8 @@
 
 # Traversal map
 
+#### Iterate through all elements in a object or array calling a callback function.
+
 ## Features
 - Blazing fast
 - Types out of the box
@@ -56,7 +58,7 @@ traversalMap(data, (value: any, keyOrIndex: string | number, path: string) => {
 |-------------	|------------------------------------------------------------------	|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
 | target     	| Object or Array or ArrayLike*                                     	| The object which will be traversed                                                                                                                                                         	|
 | callbackFn 	| (value: any, keyOrIndex?: string or number, path?: string) => any 	| - value: Value of the current position.  - keyOrIndex `optional`: Identifier of the current position, key for object and index for arrays.  - path `optional`: Path to the current position. 	|
-| options?    	| useDotNotationOnKeys: boolean                                    	| Default true. When set to false insted of this: ` a.b.c `  You will get ` a['b']['c'] `                                                                                                     	|
+| options?    	| useDotNotationOnKeys: boolean                                    	| Default true. When set to false insted of this: ` a.b.c `  You will get ` ['a']['b']['c'] `                                                                                                     	|
 
 
 #### ? = Optional paramter.
