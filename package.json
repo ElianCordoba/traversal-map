@@ -3,7 +3,16 @@
   "version": "0.0.3",
   "description": "Iterate through a nested object or array invoking a callback function. Having the key, value and path of the current iteration available",
   "keywords": [
-    "map", "for-each", "deep", "nested", "iterate", "recursive", "key", "tree", "colection", "flow control"
+    "map",
+    "for-each",
+    "deep",
+    "nested",
+    "iterate",
+    "recursive",
+    "key",
+    "tree",
+    "colection",
+    "flow control"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,6 +28,7 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "@types/jest": "^23.3.12",
+    "coveralls": "^3.0.2",
     "jest": "^23.6.0",
     "ts-jest": "^23.10.5",
     "typescript": "^3.2.2"
