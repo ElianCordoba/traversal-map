@@ -8,6 +8,8 @@ let values = [] as any;
 const simpleObject = { a: 1, b: 2, c: { d: 3, e: { f: 4 } }, g: 5 };
 const simpleArray = [1, 2, 'a', null, {}, []];
 
+const nestedObject = { a: 1, b: null, c: { d: true, e: [ {}, { f: 'asd' }, [ 1, 2, 3] ] }, g: () => {} };
+
 // Functions
 const identity = i => i;
 
@@ -61,6 +63,44 @@ test('Should treat length property as a normal properpy if the value is not a nu
 test('Should treat length property as index if the value is a number', () => {
   traversalMap({ a: { length: 1 } }, (value, key) => keys.push(key));
   expect(keys).toEqual(['a']);
+});
+
+test('Should return the right path', () => {
+  let pathA, pathB, pathC;
+  traversalMap(nestedObject, (value, key, path) => {
+    if (key === 'd') {
+      pathA = path;
+    } else if (key === 'f') {
+      pathB = path;
+    } else if (key === 'g') {
+      pathC = path;
+    }
+  });
+
+  expect(pathA).toBe('c.d');
+  expect(pathB).toBe('c.e[1].f');
+  expect(pathC).toBe('g');
+});
+
+test('Should return path in bracked notation if the option useDotNotationOnKeys is disabled', () => {
+  let pathA, pathB, pathC;
+  traversalMap(
+    nestedObject,
+    (value, key, path) => {
+      if (key === 'd') {
+        pathA = path;
+      } else if (key === 'f') {
+        pathB = path;
+      } else if (key === 'g') {
+        pathC = path;
+      }
+    },
+    { useDotNotationOnKeys: false }
+  );
+
+  expect(pathA).toBe(`['c']['d']`);
+  expect(pathB).toBe(`['c']['e'][1]['f']`);
+  expect(pathC).toBe(`['g']`);
 });
 
 /* Uncomment to debug the library
