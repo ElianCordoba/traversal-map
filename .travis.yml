@@ -1,6 +1,7 @@
 language : node_js
 node_js :
   - stable
+cache: npm
 script:
   - npm run test-with-cover
 # Send coverage data to Coveralls
