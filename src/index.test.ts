@@ -9,7 +9,12 @@ let values = [] as any;
 const simpleObject = { a: 1, b: 2, c: { d: 3, e: { f: 4 } }, g: 5 };
 const simpleArray = [1, 2, 'a', null, {}, []];
 
-const nestedObject = { a: 1, b: null, c: { d: true, e: [ {}, { f: 'asd' }, [ 1, 2, 3] ] }, g: () => {} };
+const nestedObject = {
+  a: 1,
+  b: null,
+  c: { d: true, e: [{}, { f: 'asd' }, [1, 2, 3]] },
+  g: () => {}
+};
 
 // Functions
 const identity = i => i;
@@ -105,24 +110,30 @@ test('Should return path in bracked notation if the option useDotNotationOnKeys 
 });
 
 test('Should skip nodes if the option skipNodes is eneabled', () => {
-  traversalMap(
-    simpleObject,
-    (value, key) => keys.push(key),
-    { skipNodes: true }
-  );
+  traversalMap(simpleObject, (value, key) => keys.push(key), {
+    skipNodes: true
+  });
   expect(keys).toEqual(['a', 'b', 'd', 'f', 'g']);
   keys = [];
-  
-  traversalMap(
-    nestedObject,
-    (value, key) => keys.push(key),
-    { skipNodes: true }
-  );
-  expect(keys).toEqual([ 'a', 'b', 'd', 'f', 0, 1, 2, 'g' ]);
+
+  traversalMap(nestedObject, (value, key) => keys.push(key), {
+    skipNodes: true
+  });
+  expect(keys).toEqual(['a', 'b', 'd', 'f', 0, 1, 2, 'g']);
 });
 
 test('Should handle big objects properly', () => {
   expect(() => traversalMap(bigObject, identity)).not.toThrow();
+});
+
+test.only('Should break at current depth when returned 10', () => {
+  traversalMap(simpleObject, (value, key) => {
+    if (key === 'd') {
+      return 10;
+    }
+    keys.push(key);
+  });
+  expect(keys).toEqual(['a', 'b', 'c', 'g']);
 });
 
 /* Uncomment to debug the library
