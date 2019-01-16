@@ -31,7 +31,7 @@ function innerLooper(
   } else if (collectionIsPlainObject) {
     let props = [] as any;
     for (let key in Object(collection)) {
-      if (collection.hasOwnProperty(key) && key !== 'constructor') {
+      if (collection.hasOwnProperty(key)) {
         props.push(key);
       }
     }
@@ -40,14 +40,12 @@ function innerLooper(
   }
 
   let propName;
-  let propIsPresent;
   let propValue;
   let fnResult;
   let index = 0;
   while (index < length) {
     propName = getPropName(index);
-    propIsPresent = iterable.hasOwnProperty(propName);
-    if (propIsPresent) {
+    if (iterable.hasOwnProperty(propName)) {
       propValue = iterable[propName];
       fnResult = callbackFn.call(thisArg, propValue, propName, collection);
       if (fnResult === false) {
