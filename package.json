@@ -20,7 +20,6 @@
     "build": "tsc",
     "test": "jest",
     "test-watch": "jest --watch",
-    "test-debug": "node --inspect-brk node_modules/.bin/jest --watch",
     "test-with-cover": "jest --coverage"
   },
   "repository": "github:ElianCordoba/traversal-map",
