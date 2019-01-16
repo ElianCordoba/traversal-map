@@ -60,11 +60,12 @@ function forEachLoop(
         );
       }
 
-      fnReturnCode = getFunctionReturnCode(fnReturnCode);
-
-      if (fnReturnCode === LOOP.BREAK_CURRENT || fnReturnCode === LOOP.BREAK_ALL) {
+      if (fnReturnCode === LOOP.BREAK_CURRENT) {
+        return false
+      } else if (fnReturnCode === LOOP.BREAK_ALL) {
+        loopReturnCode = fnReturnCode;
         return false;
-      } 
+      }
 
       /*
        * This is necesary because calling the `fn` may have changed the value.
@@ -86,6 +87,7 @@ function forEachLoop(
           );
 
           if (childLoopReturnCode === LOOP.BREAK_ALL) {
+            loopReturnCode = childLoopReturnCode;
             return false;
           }
         }
@@ -107,16 +109,4 @@ function validateOptions(options: Options): void {
     }
   }
   return;
-}
-
-function getFunctionReturnCode(code: number) {
-  if (!code) {
-    return LOOP.CONTINUE;
-  } else if (Number.isFinite(code)) {
-    switch (code) {
-      case 10: return LOOP.BREAK_CURRENT;
-      case 11: return LOOP.BREAK_ALL;
-      case 20: return LOOP.SKIP_CHILDREN;
-    }
-  }
 }

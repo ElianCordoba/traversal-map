@@ -126,7 +126,7 @@ test('Should handle big objects properly', () => {
   expect(() => traversalMap(bigObject, identity)).not.toThrow();
 });
 
-test.only('Should break at current depth when returned 10', () => {
+test('Should break at current depth when returned 10', () => {
   traversalMap(simpleObject, (value, key) => {
     if (key === 'd') {
       return 10;
@@ -134,6 +134,26 @@ test.only('Should break at current depth when returned 10', () => {
     keys.push(key);
   });
   expect(keys).toEqual(['a', 'b', 'c', 'g']);
+});
+
+test('Should break the iteration when returned 11', () => {
+  traversalMap(simpleObject, (value, key) => {
+    if (key === 'c') {
+      return 11;
+    }
+    keys.push(key);
+  });
+  expect(keys).toEqual(['a', 'b']);
+});
+
+test('Should skip child nodes when returned 20', () => {
+  traversalMap(simpleObject, (value, key) => {
+    if (key === 'f') {
+      return 20;
+    }
+    keys.push(key);
+  });
+  expect(keys).toEqual(['a', 'b', 'c', 'd', 'e', 'g']);
 });
 
 /* Uncomment to debug the library
