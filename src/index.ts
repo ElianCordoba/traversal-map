@@ -62,12 +62,9 @@ function forEachLoop(
 
       fnReturnCode = getFunctionReturnCode(fnReturnCode);
 
-      // @TODO review
-      if (fnReturnCode === LOOP.BREAK_CURRENT) {
+      if (fnReturnCode === LOOP.BREAK_CURRENT || fnReturnCode === LOOP.BREAK_ALL) {
         return false;
-      } else if (fnReturnCode === LOOP.BREAK_ALL) {
-        return false;
-      }
+      } 
 
       /*
        * This is necesary because calling the `fn` may have changed the value.
@@ -112,18 +109,14 @@ function validateOptions(options: Options): void {
   return;
 }
 
-/*
- * If the code is:
- * number   = convert it to a string
- * undefined = convert it to `LOOP_CONTINUE`
- * false    = convert it to `LOOP_BREAK_CURRENT`
- */
-function getFunctionReturnCode(code: number | undefined | false) {
-  if (typeof code === 'undefined') {
+function getFunctionReturnCode(code: number) {
+  if (!code) {
     return LOOP.CONTINUE;
-  } else if (code === false) {
-    return LOOP.BREAK_CURRENT;
   } else if (Number.isFinite(code)) {
-    return code.toString();
+    switch (code) {
+      case 10: return LOOP.BREAK_CURRENT;
+      case 11: return LOOP.BREAK_ALL;
+      case 20: return LOOP.SKIP_CHILDREN;
+    }
   }
 }

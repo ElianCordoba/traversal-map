@@ -67,13 +67,13 @@ traversalMap(data, (value: any, keyOrIndex: string | number, path: string) => {
 
 ## Flow Control
 
-You can modify the flow of the iteration returning special values:
+You can modify the flow of the iteration returning special numbers:
 
-`'10' | false`: Break the iteration at the current depth skyping remaining sibling elements.
+`10`: Break the iteration at the current depth skyping remaining sibling elements.
 
-`'11'`: Break the iteration.
+`11`: Break the iteration.
 
-`'20'`: Skip child elements of the current element.
+`20`: Skip child elements of the current element.
 
 ## Testing
 
