@@ -2,6 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/ElianCordoba/traversal-map/badge.svg?branch=master)](https://coveralls.io/github/ElianCordoba/traversal-map?branch=master)
 [![CodeFactor](https://www.codefactor.io/repository/github/eliancordoba/traversal-map/badge)](https://www.codefactor.io/repository/github/eliancordoba/traversal-map)
 [![Known Vulnerabilities](https://snyk.io/test/github/ElianCordoba/traversal-map/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ElianCordoba/traversal-map?targetFile=package.json)
+[![install size](https://packagephobia.now.sh/badge?p=traversal-map)](https://packagephobia.now.sh/result?p=traversal-map)
 
 # Traversal map
 
