@@ -11,7 +11,6 @@ coverage
 # Ignore the following files and directories in the directory this `.gitignore`
 # file is currently located in.
 .tmp
-package-lock.json
 test.js
 internal-roadmap
 
