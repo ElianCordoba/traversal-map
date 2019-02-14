@@ -26,7 +26,7 @@
   "author": "Elian Cordoba <eliancordoba98@gmail.com> (github.com/ElianCordoba)",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@types/jest": "^23.3.12",
+    "@types/jest": "^24.0.4",
     "coveralls": "^3.0.2",
     "jest": "^23.6.0",
     "ts-jest": "^23.10.5",
