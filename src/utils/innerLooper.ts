@@ -1,5 +1,5 @@
 import { isValidPlainObject, isArrayLikeObject } from './typeCheckers';
-import { Iterable } from '../interfaces';
+import { Iterable } from './interfaces';
 
 function innerLooper(
   collection: Iterable,

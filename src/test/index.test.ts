@@ -1,4 +1,4 @@
-import traversalMap from './index';
+import traversalMap from '../index';
 import bigObject from './bigObject';
 
 // Variables

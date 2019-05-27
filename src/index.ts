@@ -1,7 +1,7 @@
 import innerLooper from './utils/innerLooper';
 import { isValidPlainObject } from './utils/typeCheckers';
-import { LOOP, DEFAULTS } from './constants';
-import { Options, Iterable } from './interfaces';
+import { LOOP, DEFAULTS } from './utils/constants';
+import { Options, Iterable } from './utils/interfaces';
 
 export default function traversalMap(
   collection: Iterable,
