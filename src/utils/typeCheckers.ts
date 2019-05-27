@@ -5,7 +5,7 @@ export function isValidObject(obj: any): obj is Object {
 }
 
 function isObject(obj: any): obj is Object {
-  return obj != null && typeof obj === 'object';
+  return obj !== null && typeof obj === 'object';
 }
 
 function isInstanceOfForbbidenClass(obj: any): boolean {
