@@ -11,9 +11,11 @@ export default function traversalMap(
   if (options) {
     // If it doesn't throw it means that the options were valid
     validateOptions(options);
+  } else {
+    options = {};
   }
 
-  const SETTINGS = { ...DEFAULTS, ...(options || {}) };
+  const SETTINGS = { ...DEFAULTS, ...options };
 
   forEachLoop(
     collection,
