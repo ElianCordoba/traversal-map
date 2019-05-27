@@ -31,7 +31,7 @@ function forEachLoop(
   value: any,
   fn: Function,
   path: string,
-  settings: Options,
+  options: Options,
   valueIsArray: boolean,
   valueIsPlainObject: boolean
 ) {
@@ -43,7 +43,7 @@ function forEachLoop(
       if (valueIsArray) {
         deepPath = `${path}[${keyOrIndex}]`;
       } else if (valueIsPlainObject) {
-        if (settings.useDotNotationOnKeys) {
+        if (options.useDotNotationOnKeys) {
           deepPath = path ? `${path}.${keyOrIndex}` : keyOrIndex;
         } else {
           deepPath = `${path}['${keyOrIndex}']`;
@@ -51,7 +51,7 @@ function forEachLoop(
       }
 
       const shoudSkipFnCall =
-        settings.skipNodes &&
+        options.skipNodes &&
         childValue !== null &&
         typeof childValue === 'object';
 
@@ -86,7 +86,7 @@ function forEachLoop(
             childValuePostFn,
             fn,
             deepPath,
-            settings,
+            options,
             childValuePostFnIsArray,
             childValuePostFnIsObject
           );
