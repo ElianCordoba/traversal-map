@@ -1,5 +1,5 @@
 import innerLooper from './utils/innerLooper';
-import { isValidObject } from './utils/typeCheckers';
+import { isValidPlainObject } from './utils/typeCheckers';
 import { LOOP, DEFAULTS } from './constants';
 import { Options, Iterable } from './interfaces';
 
@@ -23,7 +23,7 @@ export default function traversalMap(
     '',
     SETTINGS,
     Array.isArray(collection),
-    isValidObject(collection)
+    isValidPlainObject(collection)
   );
 }
 
@@ -78,7 +78,7 @@ function forEachLoop(
        */
       let childValuePostFn = parentCollection[keyOrIndex];
       let childValuePostFnIsArray = Array.isArray(childValuePostFn);
-      let childValuePostFnIsObject = isValidObject(childValuePostFn);
+      let childValuePostFnIsObject = isValidPlainObject(childValuePostFn);
 
       if (childValuePostFnIsArray || childValuePostFnIsObject) {
         if (fnReturnCode !== LOOP.SKIP_CHILDREN) {

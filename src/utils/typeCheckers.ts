@@ -1,4 +1,4 @@
-export function isValidObject(obj: any): obj is Object {
+export function isValidPlainObject(obj: any): obj is Object {
   return (
     isObject(obj) && !Array.isArray(obj) && !isInstanceOfForbbidenClass(obj)
   );

@@ -1,4 +1,4 @@
-import { isValidObject, isFunction } from './typeCheckers';
+import { isValidPlainObject, isFunction } from './typeCheckers';
 import { Iterable } from '../interfaces';
 
 function innerLooper(
@@ -18,7 +18,7 @@ function innerLooper(
     collection !== null &&
     !isFunction(collection) &&
     typeof (collection as any).length  === 'number';
-  const collectionIsPlainObject = isValidObject(collection);
+  const collectionIsPlainObject = isValidPlainObject(collection);
 
   let length;
   const iterable = Object(collection);
