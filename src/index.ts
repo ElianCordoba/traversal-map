@@ -47,9 +47,12 @@ function forEachLoop(
           deepPath = `${path}['${keyOrIndex}']`;
         }
       }
-      
-      const shoudSkipFnCall = settings.skipNodes && childValue !== null && typeof childValue === 'object';
-      
+
+      const shoudSkipFnCall =
+        settings.skipNodes &&
+        childValue !== null &&
+        typeof childValue === 'object';
+
       let fnReturnCode;
       if (!shoudSkipFnCall) {
         fnReturnCode = fn.call(
@@ -61,7 +64,7 @@ function forEachLoop(
       }
 
       if (fnReturnCode === LOOP.BREAK_CURRENT) {
-        return false
+        return false;
       } else if (fnReturnCode === LOOP.BREAK_ALL) {
         loopReturnCode = fnReturnCode;
         return false;
