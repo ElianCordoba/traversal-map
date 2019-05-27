@@ -15,7 +15,6 @@ function innerLooper(
   }
   const collectionIsArray = Array.isArray(collection);
   const collectionIsArrayLikeObject = isArrayLikeObject(collection);
-    
   const collectionIsPlainObject = isValidPlainObject(collection);
 
   let length;
@@ -27,7 +26,7 @@ function innerLooper(
     length = iterable.length;
     getPropName = index => index;
   } else if (collectionIsPlainObject) {
-    let props = [] as any;
+    let props: string[] = [];
     for (let key in Object(collection)) {
       if (collection.hasOwnProperty(key)) {
         props.push(key);
