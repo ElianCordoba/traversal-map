@@ -6,3 +6,4 @@ coverage
 jest.config.js
 tsconfig.json
 .nyc_output
+internal-roadmap
