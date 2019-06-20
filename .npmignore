@@ -1,2 +1,8 @@
-dist
+src
 package-lock.json
+coverage
+.vscode
+.travis.yml
+jest.config.js
+tsconfig.json
+.nyc_output
