@@ -7,3 +7,6 @@ jest.config.js
 tsconfig.json
 .nyc_output
 internal-roadmap
+changelog.md
+test
+examples
